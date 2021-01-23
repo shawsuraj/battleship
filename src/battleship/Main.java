@@ -1,51 +1,86 @@
+/**
+* The Battleship program is a game.
+*
+* @author  Suraj Shaw
+* @since   2014-03-31 
+*/
+
 package battleship;
+
+import java.io.File;
+import java.io.IOException;
 
 public class Main extends globalConstants{
 	public static void menu() {
-		String menu_options = "1) New Game\n"
-							+ "2) Continue\n" 
-							+ "3) Options\n"
-							+ "4) Help\n"
-							+ "5) About Creater\n";
-		System.out.println(menu_options);
-		System.out.printf("Select an option : ");
+		
+		String menuOptions = "1) New Game\n"
+							+ "2) Continue\n"
+							+ "3) Load Game\n" 
+							+ "4) Options\n"
+							+ "5) Help\n"
+							+ "6) Quit\n";
+		System.out.println(menuOptions);
+		System.out.println("Select an option : ");
 	}
+	
+	public static void loadGame() {
+		
+	}
+
+	
+	public static void checks() {
+		File gameJSON = new File("savedgames.json");
+		 if (!gameJSON.exists()) {
+			 try {
+				if(!gameJSON.createNewFile()){
+					System.out.println("File cannot be created");
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+	        System.out.println("Does not Exists");
+		 }
+	} 
+	
 	
 	public static void main(String[] args) {
 		
-		heading();
-		menu();
-		
-		int option = scan.nextInt();
-		
-		if (option == 1) {
+		checks();
+		boolean dontExit = true;
+		while (dontExit) {
+			heading();
+			menu();
 			Game game = new Game();
-			game.start();
-			while (true) {
+			
+			int option = scan.nextInt();
+			scan.nextLine();	// It consumes the \n character
+			
+			switch (option) {
+			
+			case 1 :
+				game.newGame();
+				game.play();
+				game.saveCurrentGame();
+				break;
+				
+			case 2 :
+				break;
+				
+			case 3 :
+//				game.loadGame();
 				game.play();
 				break;
+				
+			case 6 :
+				dontExit = false;
+				break;
+
+			default :
+				System.out.println("Please Enter a valid option");
+				break;
 			}
-			String toCont;
-			System.out.println("Do you want to continue :\n");
-			toCont = scan.nextLine();
-			
-			if (toCont == "Y") {
-				System.out.println("Do you want to continue :");
-			} else {
-				scan.close();
-				System.out.println("Exit");
-				//				game.exit();
-			}
-			
-//			scan.close();
 		}
 		
-		
-//		cBoard.print();
-		
-		
-		
+		scan.close();
 	}
-	  
-
 }

@@ -1,49 +1,86 @@
 package battleship;
 
 import java.awt.Point;
+import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
 public class Board {
-	public String[][] board;
-	
+	private String[][] boardMatrix;
+
+	// Create a new board
 	public void create() {
-		board = new String[10][10];
-		
+		boardMatrix = new String[10][10];
+
 		for (int i = 0; i < 10; i++) {
 			for (int j = 0; j < 10; j++) {
-				board[i][j] = "N";
+				boardMatrix[i][j] = "N";
+			}
+		}
+	}
+
+	// Print the board
+	void print() {
+		System.out.println("\n");
+		for (int i = 0; i < 10; i++) {
+			System.out.println(Arrays.toString(boardMatrix[i]));
+		}
+	}
+
+	// Add ships to board
+	public void addToBoard(Ship s) {
+		try {
+			s.newPosition();
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if (isValidPosition(s)) {
+			for(int i=0; i < s.getSize(); i++) {
+				// Condition to place ships only in board matrix
+				if (s.getPosition()[i].x >= 0 && s.getPosition()[i].y >= 0 
+					&& s.getPosition()[i].x < 10 && s.getPosition()[i].y < 10 ) {
+					boardMatrix[s.getPosition()[i].x][s.getPosition()[i].y] = s.getName();
 				}
 			}
-	}
-	
-	
-	void print() {
-		for (int i = 0; i < 10; i++) {
-//			for (j = 0; j < 10; j++) {
-//				System.out.println(board[i][j]);
-//				}
-			System.out.println(Arrays.toString(board[i]));
-			}
-		}
-	
-	public void addToBoard(Ships ship) {
-		for(int i=0; i < ship.size; i++) {
-			if (ship.position[i].x >= 0 && ship.position[i].y >= 0 && ship.position[i].x < 10 && ship.position[i].y < 10 ) {
-				board[ship.position[i].x][ship.position[i].y] = "S";
-			}
-		}
-	}
-	
-	public boolean update(Point hitPoint) {
-		if (board[hitPoint.x][hitPoint.y] == "N") {
-			board[hitPoint.x][hitPoint.y] = "M";
-			return false;
-		} else if (board[hitPoint.x][hitPoint.y] == "S") {
-			board[hitPoint.x][hitPoint.y] = "H";
-			return true;
+		} else {
+			addToBoard(s);
 		}
 		
-		return false;
+	}
+
+	// Update the board
+	public void update(Point hitPoint, boolean attackStat) {
+		if (attackStat) {
+			boardMatrix[hitPoint.y - 1][hitPoint.x - 1] = "H";
+		} else {
+			boardMatrix[hitPoint.y - 1][hitPoint.x - 1] = "M";
+		}
 		
+		
+	}
+	
+	// Position is valid i.e don't overlap with other ships or go out of board
+	public boolean isValidPosition(Ship s) {
+		for (Point p : s.getPosition()) {
+			if (!boardMatrix[p.x][p.y].equals("N")) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	// getters and setters
+	/**
+	 * @return the boardMatrix
+	 */
+	public String[][] getBoardMatrix() {
+		return boardMatrix;
+	}
+
+	/**
+	 * @param boardMatrix the boardMatrix to set
+	 */
+	public void setBoardMatrix(String[][] boardMatrix) {
+		this.boardMatrix = boardMatrix;
 	}
 }

@@ -6,10 +6,11 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Scanner;
 
+// This class contains all the global constants
 public class globalConstants {
 	static Scanner scan = new Scanner(System.in);
-	
-	public static void heading() {
+	public static void clrscreen(){
+		// Clear screen
 		try {
 			final String os = System.getProperty("os.name");
 	        if (os.contains("Windows"))
@@ -23,7 +24,10 @@ public class globalConstants {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+	}
+
+	// The main heading of the game
+	public static void heading() {
 		try (BufferedReader br = new BufferedReader(new FileReader("heading.txt"))) {
 			   String line;
 			   while ((line = br.readLine()) != null) {
@@ -37,4 +41,19 @@ public class globalConstants {
 				// e.printStackTrace();
 			}
 	}
+
+	// Slow print the string
+	static void slowPrint(String message, int delay) {
+        char[] chars = message.toCharArray();
+
+        for (int i = 0; i < chars.length; i++) {
+            System.out.print(chars[i]);
+            try {
+                Thread.sleep(delay);
+            }
+            catch(InterruptedException ex) {
+                Thread.currentThread().interrupt();
+            }
+        }
+    }
 }
