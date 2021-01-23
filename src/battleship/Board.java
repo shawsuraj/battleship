@@ -4,46 +4,65 @@ import java.awt.Point;
 import java.util.Arrays;
 
 public class Board {
-	public String[][] board;
-	
+	String[][] boardMatrix;
+
+	// Create a new board
 	public void create() {
-		board = new String[10][10];
-		
+		boardMatrix = new String[10][10];
+
 		for (int i = 0; i < 10; i++) {
 			for (int j = 0; j < 10; j++) {
-				board[i][j] = "N";
+				boardMatrix[i][j] = "N";
 				}
 			}
 	}
-	
-	
+
+	// Print the board
 	void print() {
+		System.out.println("\n");
 		for (int i = 0; i < 10; i++) {
 //			for (j = 0; j < 10; j++) {
-//				System.out.println(board[i][j]);
+//				System.out.println(boardMatrix[i][j]);
 //				}
-			System.out.println(Arrays.toString(board[i]));
+			System.out.println(Arrays.toString(boardMatrix[i]));
 			}
 		}
-	
-	public void addToBoard(Ships ship) {
-		for(int i=0; i < ship.size; i++) {
-			if (ship.position[i].x >= 0 && ship.position[i].y >= 0 && ship.position[i].x < 10 && ship.position[i].y < 10 ) {
-				board[ship.position[i].x][ship.position[i].y] = "S";
+
+	// Add ships to board
+	public void addToBoard(Ship s) {
+		s.newPosition();
+		if (isValidPosition(s)) {
+			for(int i=0; i < s.size; i++) {
+				// Condition to place ships only in board matrix
+				if (s.position[i].x >= 0 && s.position[i].y >= 0 
+					&& s.position[i].x < 10 && s.position[i].y < 10 ) {
+					boardMatrix[s.position[i].x][s.position[i].y] = s.name;
+				}
 			}
+		} else {
+			addToBoard(s);
 		}
+		
+	}
+
+	// Update the board
+	public void update(Point hitPoint, boolean attackStat) {
+		if (attackStat) {
+			boardMatrix[hitPoint.y - 1][hitPoint.x - 1] = "H";
+		} else {
+			boardMatrix[hitPoint.y - 1][hitPoint.x - 1] = "M";
+		}
+		
+		
 	}
 	
-	public boolean update(Point hitPoint) {
-		if (board[hitPoint.x][hitPoint.y] == "N") {
-			board[hitPoint.x][hitPoint.y] = "M";
-			return false;
-		} else if (board[hitPoint.x][hitPoint.y] == "S") {
-			board[hitPoint.x][hitPoint.y] = "H";
-			return true;
+	// Position is valid i.e don't overlap with other ships or go out of board
+	public boolean isValidPosition(Ship s) {
+		for (Point p : s.position) {
+			if (boardMatrix[p.x][p.y] != "N") {
+				return false;
+			}
 		}
-		
-		return false;
-		
+		return true;
 	}
 }
