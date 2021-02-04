@@ -1,1 +1,0 @@
-typeSearchIndex = [{"l":"All Classes","u":"allclasses-index.html"},{"p":"battleship","l":"Board"},{"p":"battleship","l":"Game"},{"p":"battleship","l":"globalConstants"},{"p":"battleship","l":"Main"},{"p":"battleship","l":"Ship"}];updateSearchResults();
