@@ -20,7 +20,7 @@ public class Main extends globalConstants{
 							+ "5) Help\n"
 							+ "6) Quit\n";
 		System.out.println(menuOptions);
-		System.out.println("Select an option : ");
+		System.out.print("Select an option : ");
 	}
 	
 	public static void loadGame() {
@@ -51,10 +51,7 @@ public class Main extends globalConstants{
 			heading();
 			menu();
 			Game game = new Game();
-			
-			int option = scan.nextInt();
-			scan.nextLine();	// It consumes the \n character
-			
+			int option = input_int();
 			switch (option) {
 			
 			case 1 :
@@ -67,7 +64,7 @@ public class Main extends globalConstants{
 				break;
 				
 			case 3 :
-//				game.loadGame();
+//					game.loadGame();
 				game.play();
 				break;
 				

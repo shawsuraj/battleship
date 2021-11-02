@@ -56,4 +56,33 @@ public class globalConstants {
             }
         }
     }
+	
+	// Integer input with error handling (try/catch)
+	public static int inputInt() {
+		int x;
+		while (true) {
+			try {
+				x = Integer.parseInt(scan.nextLine());
+				break;
+			} catch (NumberFormatException e) {
+				x = 0;
+				System.out.print("Please Enter a valid integer : ");
+			}	
+		}
+		return x;
+	}
+	
+	// Integer input with error handling (regex)
+	public static String inputOnlyString() {
+		String x;
+		String pattern =  "[a-zA-Z]+";
+		while (true) {
+			x = scan.nextLine();
+			if (x.matches(pattern)) {
+				return x;
+			} else {
+				System.out.print("Invalid Input. Enter a valid string : ");
+			}
+		}
+	}
 }

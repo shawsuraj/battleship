@@ -175,12 +175,12 @@ public class Game extends globalConstants {
 			
 			System.out.println("Enter x and y coordinates to shoot. Enter x = 0 or y = 0 to exit shooting.");
 			System.out.print("Enter x:  ");
-			hitPoint.x = scan.nextInt();
-			scan.nextLine();	// It consumes the \n character
+			hitPoint.x = input_int();
+//			scan.nextLine();	// It consumes the \n character
 
 			System.out.print("Enter y:  ");
-			hitPoint.y = scan.nextInt();
-			scan.nextLine();	// It consumes the \n character
+			hitPoint.y = input_int();
+//			scan.nextLine();	// It consumes the \n character
 			
 		} while (hitPoint.x < 0 || hitPoint.x > 10 || hitPoint.y < 0 || hitPoint.y > 10);
 		
@@ -226,7 +226,7 @@ public class Game extends globalConstants {
 			System.out.println("You have successfully completed the game. ");
 		} else {
 			System.out.println("Do you want to save the progress? (Y/N)");
-			String doSave = scan.nextLine();
+			String doSave = input_onlyString();
 			if (doSave != null && (doSave.equals("Y") || doSave.equals("y"))) {
 				saveGameToJSON();
 				System.out.println("Your progress have beenn saved. ");
@@ -323,64 +323,64 @@ public class Game extends globalConstants {
 		saveGameToJSON("lastGame");
 	}
  	
-	public void loadGame() throws IOException {
-		InputStream is = new FileInputStream("savedgames.json");
-		String output = new String(is.readAllBytes(), StandardCharsets.UTF_8);
-
-
-        JSONTokener tokener = new JSONTokener(is);
-        JSONObject object = new JSONObject(tokener);
-        
-        JSONArray games = new JSONArray(tokener);
-        
-        System.out.println("Id  : " + object.getLong("id"));
-        System.out.println("Name: " + object.getString("name"));
-        System.out.println("Age : " + object.getInt("age"));
-
-        System.out.println("Courses: ");
-        JSONArray courses = object.getJSONArray("courses");
-        for (int i = 0; i < courses.length(); i++) {
-            System.out.println("  - " + courses.get(i));
-        }
-        
-     // Translating board data into JSON format
-        JSONArray board = new JSONArray(games);
-        for (String[] i : this.cBoard.getBoardMatrix()) {
-          JSONArray arr = new JSONArray();
-          for (String j : i) {
-            arr.put(j); // or some other conversion
-          }
-          board.put(arr);
-        }
-        obj.put("board", board);
-        
-        // Translating ships data into JSON format
-        JSONArray shipArray = new JSONArray();
-        for (Ship s : this.ships) {
-        	JSONObject ship = new JSONObject();
-        	ship.put("name", s.getName());
-        	ship.put("fulName", s.getFullName());
-        	ship.put("size", s.getSize());
-        	JSONArray positionArray = new JSONArray();
-        	for (Point p : s.getPosition()) {
-        		JSONArray pointArray = new JSONArray();
-        		pointArray.put(p.x);
-        		pointArray.put(p.y);
-        		positionArray.put(pointArray);
-        	}
-        	ship.put("position", positionArray);
-        	ship.put("health", s.getHealth());
-        	shipArray.put(ship);
-        }
-        obj.put("ships", shipArray);
-        
-        // Translating player stats into JSON format
-        obj.put("score", this.score);
-        obj.put("hits", this.hits);
-        obj.put("miss", this.miss);
-        
-        games.put(obj);
-    }
+//	public void loadGame() throws IOException {
+//		InputStream is = new FileInputStream("savedgames.json");
+//		String output = new String(is.readAllBytes(), StandardCharsets.UTF_8);
+//
+//
+//        JSONTokener tokener = new JSONTokener(is);
+//        JSONObject object = new JSONObject(tokener);
+//        
+//        JSONArray games = new JSONArray(tokener);
+//        
+//        System.out.println("Id  : " + object.getLong("id"));
+//        System.out.println("Name: " + object.getString("name"));
+//        System.out.println("Age : " + object.getInt("age"));
+//
+//        System.out.println("Courses: ");
+//        JSONArray courses = object.getJSONArray("courses");
+//        for (int i = 0; i < courses.length(); i++) {
+//            System.out.println("  - " + courses.get(i));
+//        }
+//        
+//     // Translating board data into JSON format
+//        JSONArray board = new JSONArray(games);
+//        for (String[] i : this.cBoard.getBoardMatrix()) {
+//          JSONArray arr = new JSONArray();
+//          for (String j : i) {
+//            arr.put(j); // or some other conversion
+//          }
+//          board.put(arr);
+//        }
+//        obj.put("board", board);
+//        
+//        // Translating ships data into JSON format
+//        JSONArray shipArray = new JSONArray();
+//        for (Ship s : this.ships) {
+//        	JSONObject ship = new JSONObject();
+//        	ship.put("name", s.getName());
+//        	ship.put("fulName", s.getFullName());
+//        	ship.put("size", s.getSize());
+//        	JSONArray positionArray = new JSONArray();
+//        	for (Point p : s.getPosition()) {
+//        		JSONArray pointArray = new JSONArray();
+//        		pointArray.put(p.x);
+//        		pointArray.put(p.y);
+//        		positionArray.put(pointArray);
+//        	}
+//        	ship.put("position", positionArray);
+//        	ship.put("health", s.getHealth());
+//        	shipArray.put(ship);
+//        }
+//        obj.put("ships", shipArray);
+//        
+//        // Translating player stats into JSON format
+//        obj.put("score", this.score);
+//        obj.put("hits", this.hits);
+//        obj.put("miss", this.miss);
+//        
+//        games.put(obj);
+//    }
 	
 	void contGame() {
 		

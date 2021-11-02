@@ -37,7 +37,7 @@ public class Board {
 		if (isValidPosition(s)) {
 			for(int i=0; i < s.getSize(); i++) {
 				// Condition to place ships only in board matrix
-				if (s.getPosition()[i].x >= 0 && s.getPosition()[i].y >= 0 
+				if (s.getPosition()[i].x >= 0 && s.getPosition()[i].y >= 0
 					&& s.getPosition()[i].x < 10 && s.getPosition()[i].y < 10 ) {
 					boardMatrix[s.getPosition()[i].x][s.getPosition()[i].y] = s.getName();
 				}
@@ -45,7 +45,7 @@ public class Board {
 		} else {
 			addToBoard(s);
 		}
-		
+
 	}
 
 	// Update the board
@@ -55,20 +55,20 @@ public class Board {
 		} else {
 			boardMatrix[hitPoint.y - 1][hitPoint.x - 1] = "M";
 		}
-		
-		
+
+
 	}
-	
+
 	// Position is valid i.e don't overlap with other ships or go out of board
 	public boolean isValidPosition(Ship s) {
 		for (Point p : s.getPosition()) {
-			if (!boardMatrix[p.x][p.y].equals("N")) {
+			if (!boardMatrix[p.y][p.x].equals("N")) {
 				return false;
 			}
 		}
 		return true;
 	}
-	
+
 	// getters and setters
 	/**
 	 * @return the boardMatrix
