@@ -23,7 +23,7 @@ public class Ship {
 	private int size;			// Size of ship
 	private Point[] position;	// Coordinates of ship
 	private int health;	// Health of ship = (size - number of times the ship got shot)
-	
+
 	/**
 	 * Ship Constructor.
 	 *
@@ -42,7 +42,7 @@ public class Ship {
 	 * Generates new position for the ships.
 	 *
 	 * @return Point[] - Array of ships's coordinates.
-	 * @throws NoSuchAlgorithmException 
+	 * @throws NoSuchAlgorithmException
 	 */
 	public Point[] newPosition() throws NoSuchAlgorithmException {
 		Random rand = SecureRandom.getInstanceStrong(); // SecureRandom is preferred to Random

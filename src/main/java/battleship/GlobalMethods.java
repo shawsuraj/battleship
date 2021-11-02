@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 // This class contains all the global constants
-public class globalConstants {
+public class GlobalMethods {
 	static Scanner scan = new Scanner(System.in);
 	public static void clrscreen(){
 		// Clear screen
@@ -28,7 +28,7 @@ public class globalConstants {
 
 	// The main heading of the game
 	public static void heading() {
-		try (BufferedReader br = new BufferedReader(new FileReader("heading.txt"))) {
+		try (BufferedReader br = new BufferedReader(new FileReader("src/main/resources/title"))) {
 			   String line;
 			   while ((line = br.readLine()) != null) {
 			       System.out.println(line);
@@ -56,6 +56,11 @@ public class globalConstants {
             }
         }
     }
+	
+	public static String input() {
+		String string = scan.nextLine();
+		return string;
+	}
 	
 	// Integer input with error handling (try/catch)
 	public static int inputInt() {
